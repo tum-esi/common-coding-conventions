@@ -3,8 +3,19 @@
 
 # Software Design Guide for Embedded Systems
 
-This guide has six sections: [1. Architecture](user-content-architecture), 2. Implementation, 3. Naming, 4. Layout, 5. Documentation, and 6. Language Specific Advice. To
-follow this guide, you should know basic programming rules, such as
+<!-- > Keep it simple and solid, let the toolchain be smart,  
+> code correctness is a duty, but readability the art. -->
+
+The goal of this guide is to be concise, universal, and remarkable. It covers 6 topics:
+
+  1. [Architecture](#user-content-architecture), 
+  2. [Implementation](#user-content-implementation), 
+  3. [Naming](#user-content-naming), 
+  4. [Code Layout](#user-content-code-layout), 
+  5. [Documentation](#user-content-documentation), and 
+  6. [Language Specific Advice](#user-content-language). 
+
+To follow this guide, you should know basic programming rules, such as
 writing loops and meaningful functions instead of copy pasting
 instructions.
 
@@ -209,7 +220,7 @@ functions, or classes. Furthermore, avoid *unreachable code* (e.g. after
 
 
 
-## Naming Suggestions
+## Naming
 Code should communicate behavior to other humans with lower complexity than the behavior it inherits. Abstracting with meaningful names is most important for readability.
 
 
@@ -241,7 +252,7 @@ Procedures *may* return values, functions always return a value. Methods are sub
 
 
 
-## Code Layout (Visual Appearance)
+## Code Layout
 A clear and consistent visual appearance of your code improves readability and readability helps to understand the code.
 
  * Existing Project: Stick to the existing recommendation and tools.
