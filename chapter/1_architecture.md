@@ -15,24 +15,25 @@ tree, the more specific your instructions can be. Avoid state variables
 at high abstraction levels.
 
 
+
 **Bad**
-```pythong
-Engine.start()
+```python
+engine.start()
 nStartUps += 1
-if FuelTank.isEmpty():
-FuelGaugeUI.setRedLED()
+if fuelTank.isEmpty():
+  fuelGaugeUI.setRedLED()
 ```
 
 **Better**
-```pythong
-Engine.start()
-Engine.runTest():
-warnings = Engine.warnings()
-Dashboard.show( warnings )
+```python
+engine.start()
+engine.runTest():
+warnings = engine.warnings()
+dashboard.show( warnings )
 ```
 
 **Better**
-```pythong
+```python
 Sys.test():
  Engine.test():
   SparkPlug.test():
