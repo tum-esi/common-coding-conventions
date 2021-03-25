@@ -1,8 +1,7 @@
 <!-- <img align="right" src="img/tum-logo-large.svg">[Professorship of Embedded Systems and Internet of Things](https://www.ei.tum.de/esi/)<br>[Technical University of Munich](https://www.tum.de/)   -->
 <img width="100%" src="img/tum-ei-esi-header.svg">
 
-
-<!-- &nbsp; -->
+&nbsp;
 # Software Design Guide
 
 The goal of this guide is to be concise, universal, and remarkable. It targets emerging code enthusiasts under time pressure and covers 6 topics:
