@@ -1,7 +1,8 @@
-![header-logo](img/tum-ei-esi-header.png)
+<!-- <img align="right" src="img/tum-logo-large.svg">[Professorship of Embedded Systems and Internet of Things](https://www.ei.tum.de/esi/)<br>[Technical University of Munich](https://www.tum.de/)   -->
+<img width="100%" src="img/tum-ei-esi-header.svg">
 
 
-&nbsp;
+<!-- &nbsp; -->
 # Software Design Guide
 
 The goal of this guide is to be concise, universal, and remarkable. It targets emerging code enthusiasts under time pressure and covers 6 topics:
@@ -91,7 +92,11 @@ tree, the more specific your instructions can be. Avoid state variables
 at high abstraction levels.
 
 
-**Bad**
+<table>
+<tr><td><strong>Bad ❌</strong></td><td><strong>Better ✔</strong></td></tr>
+<tr>
+<td>
+
 ```python
 engine.start()
 nStartUps += 1
@@ -99,7 +104,8 @@ if fuelTank.isEmpty():
   fuelGaugeUI.setRedLED()
 ```
 
-**Better**
+</td><td>
+
 ```python
 engine.start()
 engine.runTest():
@@ -107,8 +113,10 @@ warnings = engine.warnings()
 dashboard.show( warnings )
 ```
 
-*Mixing abstraction levels creates confusion and introduces unnecessary
-dependencies.*
+</td></tr></table>
+
+> ⚠ **Caution:** *Mixing abstraction levels creates confusion and introduces unnecessary dependencies.*
+
 
 [Read more …](chapter/1_architecture.md)
 
@@ -150,7 +158,7 @@ Create new types or derive subtypes from primitives to create more
 specific names. Especially for physical quantities. 
 
 
-**Bad**
+**Bad ❌**
 ```c
 double limit = 13.89;        // unit not clear
 from_to(int x,  int y,
@@ -160,7 +168,7 @@ if (speed > limit &&
    t.h > 22 && t.h < 6){..}  // 22 and 6 are magic numbers
 ```
 
-**Better**
+**Better ✔**
 ```c
 MeterPerSecond limit = SPEED_LIMIT_NIGHT;
 drive(Point origin, Point dest);
@@ -169,6 +177,8 @@ isNight    = (T_NIGHT_MIN < t.h && t.h < T_NIGHT_MAX);
 isSpeeding = (limit < speed);
 if (isSpeeding && isNight){..}
 ```
+
+
 
 
 ### Do not change the same variable in steps but compose once from parts
@@ -180,7 +190,12 @@ then compose the final value of these parts in one instruction at the
 end. E.g. `total = partA + partB`.
 
 
-**Bad**
+
+<table>
+<tr><td><strong>Bad ❌</strong></td><td><strong>Better ✔</strong></td></tr>
+<tr>
+<td>
+  
 ```c
 totalIncome = 0 
 // ... long code to get contract
@@ -189,14 +204,24 @@ totalIncome += contract.salary
 totalIncome -= taxoffice[id].tax
 ```
 
-**Better**
+</td><td>
+<!-- <pre lang="c">
+Int totalIncome(employee){      
+    salary = getSalary(employee)
+    tax    = getTax(employee)   
+    return (salary - tax)
+</pre> -->
+
 ```c
 Int totalIncome(employee){      
     salary = getSalary(employee)
     tax    = getTax(employee)   
     return (salary - tax)       
 }
-``` 
+```
+
+</td></tr></table>
+
 
 
 ### Sort arguments and limit them to 0 – 4 per call.
@@ -222,7 +247,7 @@ Procedures *may* return values, functions always return a value. Methods are sub
  * function names should describe the result and, if suitable, its type. e.g. `time_ms(), sin(x)`
  * class methods should not repeat or include the name of the class. Define `Line.length()`, not `Line.getLineLength()`
 
-*Single noun subprograms should be pure functions! Never let e.g. `x.length()` change a state.*
+> ⚠ **Caution:** *Single noun subprograms should be pure functions! Never let e.g. `x.length()` change a state.*
 
 
 ### Types (=Class/Struct/Subtypes)
@@ -266,6 +291,75 @@ Noun and adjective pairs with same/similar length:
 
 Avoid inappropriate terms: `master/slave`. See [1](https://www.drupal.org/node/2275877) and [2](https://bugs.python.org/issue34605).
 
+
+<details>
+<summary><strong>ℹ List of common coding abbreviations</strong> (👆 click)
+</summary>
+
+| **Abbr.**  | **Meaning**  |
+|--------|------------|
+| `arg`  |  argument  |
+| `app`  |  application  |
+| `auth` |  authentication  |
+| `avg`  |  average   |
+| `bat`  |  battery   |
+| `buf`  |  buffer    |
+| `cb`   |  callback  |
+| `cfg`  |  config.   |
+| `clk`  |  clock     |
+| `col`  |  column    |
+| `cnt`  |  counter   |
+| `cmd`  |  command   |
+| `ctx`  |  context   |
+| `dev`  |  device    |
+| `doc`  |  document  |
+| `drv`  |  driver    |
+| `dt`   |  delta time  |
+| `el`   |  element   |
+| `env`  |  environment |
+| `err`  |  error     |
+| `exc`  |  exception |
+| `fh`   |  file handler |
+| `fmt`  |  format    |
+| `hdr`  |  header    |
+| `hex`  |  hexadecimal |
+| `img`  |  image     |
+| `idx`  |  index     |
+| `len`  |  length    |
+| `lib`  |  library   |
+| `lvl`  |  level     |
+| `max`  |  maximum   |
+| `mid`  |  middle    |
+| `min`  |  minimum   |
+| `mem`  |  memory    |
+| `mon`  |  monitor   |
+| `msg`  |  message   |
+| `net`  |  network   |
+| `num`  |  number    |
+| `obj`  |  object    |
+| `pkg`  |  package   |
+| `pkt`  |  packet    |
+| `pos`  |  position  |
+| `pt`   |  point     |
+| `ptr`  |  pointer   |
+| `pwr`  |  power     |
+| `px`   |  pixel     |
+| `rnd`  |  round     |
+| `reg`  |  register  |
+| `rot`  |  rotation  |
+| `sep`  |  separator |
+| `std`  |  standard  |
+| `str`  |  string    |
+| `sys`  |  system    |
+| `tmr`  |  timer     |
+| `ts`   |  timestamp |
+| `val`  |  value     |
+| `var`  |  variable  |
+| `win`  |  window    |
+
+</details>
+
+
 [Read more …](chapter/3_naming.md)
 
 
@@ -298,7 +392,8 @@ Comment only what the code cannot say, that is *why* you did it, maybe *what* yo
 
 
 ### Use `TODO` and `FIXME` tags.
-Comment unfinished work with `TODO:` or `FIXME:`, which allows to search & find these lines later. A `TODO` is more urgent and needs to be done, a `FIXME` would be nice to have but is not required.
+Comment unfinished work with `TODO:` or `FIXME:`, which allows to search & find these lines later. Some IDEs will automatically highlight these tags via [extensions](https://open-vsx.org/extension/wayou/vscode-todo-highlight).
+A `TODO` is more urgent and needs to be done, a `FIXME` would be nice to have but is not required.
 
 
 ### Readme Files
