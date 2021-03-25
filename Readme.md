@@ -239,6 +239,33 @@ Procedures *may* return values, functions always return a value. Methods are sub
  * write constant names in capitals. E.g `CFG_TEMPERATURE_MAX = 80.0`
  * prefix global and static variables with `g_` and `s_`
 
+
+### Use word pairs (opposites, antonyms)
+If you “`start`” something, you should “`stop`” it and not “`end`” it. While most opposites can be created by using `un-` or `de-` prefixes (`lock/unlock`), some are more distinct and allow vertical code alignment:
+
+Verb pairs with same length:
+
+| `set` |`send` |`query` |`insert` |`attach` |`show` |`split` |`enter` |`accept`  |
+|-------|-------|--------|---------|---------|-------|--------|--------|----------|
+| `get` |`recv` |`reply` |`delete` |`detach` |`hide` |`merge` |`leave` |`reject`  |
+
+
+Verb pairs that differ by one character are more visually distinct but still easy to align with one extra space:
+
+|  `open`  | `read`  | `load`  | `push` | `start` | `create`  | `grant` | `hit`  | `prepend` | `empty`  |
+|----------|---------|---------|--------|---------|-----------|---------|--------|-----------|----------|
+|  `close` | `write` | `store` | `pop`  | `stop`  | `destroy` | `deny`  | `miss` | `append`  | `full`   |
+
+
+Noun and adjective pairs with same/similar length:
+
+| `max` |`next` |`head` |`new` |`row` |`ack` |`front` |`source` |`client` |`primary` |`leader`   |
+|-------|-------|-------|------|------|------|--------|---------|---------|----------|-----------|
+| `min` |`prev` |`tail` |`old` |`col` |`nak` |`rear`  |`target` |`server` |`replica` |`follower` |
+
+
+Avoid inappropriate terms: `master/slave`. See [1](https://www.drupal.org/node/2275877) and [2](https://bugs.python.org/issue34605).
+
 [Read more …](chapter/3_naming.md)
 
 
@@ -252,8 +279,8 @@ A clear and consistent visual appearance of your code improves readability and r
 
 | Language   | Tool   |   
 |:-----------|--------|
-| C          | [uncrustify](http://uncrustify.sourceforge.net/) |
 | Python     | [black](https://pypi.org/project/black/)         |
+| C          | [uncrustify](http://uncrustify.sourceforge.net/) |
 | C++        | [clang-format](http://clang.llvm.org/docs/ClangFormat.html) |
 | JavaScript | [prettier.io](https://prettier.io/) |
 
@@ -299,11 +326,12 @@ Each programming language has special mechanisms and some rules are only applica
 
 &nbsp;
 ## References
-This guide is partly based on the principles that are explained in the following documents and books and we can recommend them as further reading material.
+This guide is partly based on the principles that are explained in the following documents and books and we can recommend them as further reading material. Students from TUM and other universities can read the books for free. Simply click the links below and login with your university credentials. 
+
 
  * [Cmpl] S. McConnell: [“Code Complete”](https://learning.oreilly.com/library/view/code-complete-second/0735619670/?ar), Pearson Education, 2004. 
- * [ClCd] R. C. Martin: [“Clean Code: A Handbook of Agile Software Craftsmanship”](https://www.amazon.de/dp/0132350882), Pearson Education, 2009. [(Public Summary)](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29)
+ * [ClCd] R. C. Martin: [“Clean Code: A Handbook of Agile Software Craftsmanship”](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/?ar), Pearson Education, 2009. [(Public Summary)](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29)
  * [ClAr] R. C. Martin: [“Clean Architecture: Guide to Software Structure and Design”](https://learning.oreilly.com/library/view/clean-architecture-a/9780134494272/?ar), Pearson Education, 2017.
- * [HdFi] E. Freeman et. al.: [“Head First Design Patterns”](https://learning.oreilly.com/library/view/head-first-design/9781492077992/?ar), 2nd Edition, O’Reilly Media, 2020.
+ * [HdFi] E. Freeman et al.: [“Head First Design Patterns”](https://learning.oreilly.com/library/view/head-first-design/9781492077992/?ar), 2nd Edition, O’Reilly Media, 2020.
  * [PEP8] G. Van Rossum, B. Warsaw, and N. Coghlan: [“PEP 8: Style Guide for Python Code”](https://www.python.org/dev/peps/pep-0008/), Python.org, vol. 1565, 2001.
 
