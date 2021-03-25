@@ -4,7 +4,7 @@
 &nbsp;
 # Software Design Guide
 
-The goal of this guide is to be concise, universal, and remarkable. It covers 6 topics:
+The goal of this guide is to be concise, universal, and remarkable. It targets emerging code enthusiasts under time pressure and covers 6 topics:
 
   1. [Architecture](#user-content-architecture), 
   2. [Implementation](#user-content-implementation), 
@@ -13,12 +13,11 @@ The goal of this guide is to be concise, universal, and remarkable. It covers 6 
   5. [Documentation](#user-content-documentation), and 
   6. [Languages](#user-content-languages). 
 
-To follow this guide, you should already know basic programming rules, such as
-writing loops and meaningful functions instead of copy pasting
+To follow this guide, you should already have heard about Object Oriented Programming and know basic programming rules, such as writing loops and meaningful functions instead of copy pasting
 instructions. 
 In this Readme, we will shortly summarize the most important rules for every topic. More rules and details can be found if you follow the links at each heading. 
 
-While it might be difficult to recall all rules later, try to remember the underlying philosophy of this guide:
+Since our brains are sieves, try to remember the underlying philosophy of this guide:
 
 > Keep it simple and solid, let the toolchain be smart,  
 > code correctness is the duty and readability the art.
@@ -31,7 +30,7 @@ While it might be difficult to recall all rules later, try to remember the under
 
 "Consistency with this guide is important. Consistency within a project
 is more important. Consistency within one module or function is the most
-important" [1].
+important" [PEP8].
 
 
 
@@ -49,10 +48,10 @@ To be universal, we group several concepts under these broad
 identifiers:
 
 
- * **Scope**       ={Module, File Namespace, Subprogram}                
- * **Subprogram**  ={Procedure, Function, Method}
- * **Type**        ={Primitive, Collection, Struct, Class, ...}   
- * **Collection**  ={Array, List, Tuple, Dict, Map, ...}
+ * **Scope**       = {Module, File Namespace, Subprogram}                
+ * **Subprogram**  = {Procedure, Function, Method}
+ * **Type**        = {Primitive, Collection, Struct, Class, ...}   
+ * **Collection**  = {Array, List, Tuple, Dict, Map, ...}
 
 
 
@@ -111,7 +110,7 @@ dashboard.show( warnings )
 *Mixing abstraction levels creates confusion and introduces unnecessary
 dependencies.*
 
-
+[Read more …](chapter/1_architecture.md)
 
 
 
@@ -137,18 +136,10 @@ affect a single line of code.
 
 ### Keep all scopes (File/Class/Function) small and sorted
 
-Define functions and variables in the smallest possible scope and limit
+Define subprograms and variables in the smallest scope possible and limit
 their exposure to external code. Put all declarations at the beginning
 of each scope and initialize variables directly at the declaration. Do
 not reuse variables in nested scopes or for different purposes.
-
-
-### Sort arguments and limit them to 0 – 4 per function call.
-
-If your argument list grows too long, try to combine related arguments in a
-new data structure. For example, instead of passing `x`, `y`, `z`
-coordinates individually, use a vector. 
-
 
 
 ### Express Ideas in Code: Use Domain-Specific Names
@@ -163,7 +154,7 @@ specific names. Especially for physical quantities.
 ```c
 double limit = 13.89;        // unit not clear
 from_to(int x,  int y,
-        int x2, int y2);
+        int x2, int y2);     // vague argument names 
 
 if (speed > limit && 
    t.h > 22 && t.h < 6){..}  // 22 and 6 are magic numbers
@@ -182,7 +173,7 @@ if (isSpeeding && isNight){..}
 
 ### Do not change the same variable in steps but compose once from parts
 
-Within a function, do not modify the same variable in several steps,
+Within a subprogram, do not modify the same variable in several steps,
 e.g. by summing up an amount using `total += ...` multiple times.
 Instead, call functions that return some part of the final value and
 then compose the final value of these parts in one instruction at the
@@ -205,14 +196,24 @@ Int totalIncome(employee){
     tax    = getTax(employee)   
     return (salary - tax)       
 }
-```                            
+``` 
 
+
+### Sort arguments and limit them to 0 – 4 per call.
+
+If the argument list of a subprogram grows too long, try to combine related arguments in a
+new data structure. For example, instead of passing `x`, `y`, `z`
+coordinates individually, use a single vector. 
+
+
+
+[Read more …](chapter/2_implementation.md)
 
 
 
 &nbsp;
 ## [Naming](chapter/3_naming.md)
-Code should communicate behavior to other humans with lower complexity than the behavior it inherits. Abstracting with meaningful names is most important for readability.
+Code should communicate behavior to other humans with lower complexity than the behavior it inherits. Abstracting with meaningful names is therefore most important for readability.
 
 
 ### Subprograms (=Procedure/Function)
@@ -221,7 +222,7 @@ Procedures *may* return values, functions always return a value. Methods are sub
  * function names should describe the result and, if suitable, its type. e.g. `time_ms(), sin(x)`
  * class methods should not repeat or include the name of the class. Define `Line.length()`, not `Line.getLineLength()`
 
-*Single noun subprograms must be pure functions! Never let e.g. `x.length()` change a state.*
+*Single noun subprograms should be pure functions! Never let e.g. `x.length()` change a state.*
 
 
 ### Types (=Class/Struct/Subtypes)
@@ -231,14 +232,14 @@ Procedures *may* return values, functions always return a value. Methods are sub
 
 
 ### Variables
- * variables with a large scope *should* have long names, variables with a small scope *can* have short names.
+ * variables with a large scope *should* have long names, variables with a small scope *may* have short names.
  * collections (set, array, dict) should have a plural name. E.g. `cars`, `indices`
- * the prefix `n` or `num` should be used for names representing the total number of objects in a collection. E.g. `nCars`
+ * the prefix `n` or `num` should be used for names representing the total number of objects in a collection. E.g. `numCars`
  * boolean variables should start with a `is/has/can/does` prefix (e.g. `isEmpty`, `doesUseIO`).
  * write constant names in capitals. E.g `CFG_TEMPERATURE_MAX = 80.0`
  * prefix global and static variables with `g_` and `s_`
 
-
+[Read more …](chapter/3_naming.md)
 
 
 
@@ -246,13 +247,13 @@ Procedures *may* return values, functions always return a value. Methods are sub
 ## [Code Layout](chapter/4_layout.md)
 A clear and consistent visual appearance of your code improves readability and readability helps to understand the code.
 
- * Existing Project: Stick to the existing recommendation and tools.
+ * Existing Project: Stick to the existing recommendations and tools.
  * New Project: Use an automatic code layouter. Examples:
 
 | Language   | Tool   |   
 |:-----------|--------|
 | C          | [uncrustify](http://uncrustify.sourceforge.net/) |
-| Python     | [black](https://pypi.org/project/black/) |
+| Python     | [black](https://pypi.org/project/black/)         |
 | C++        | [clang-format](http://clang.llvm.org/docs/ClangFormat.html) |
 | JavaScript | [prettier.io](https://prettier.io/) |
 
@@ -285,7 +286,8 @@ There are two different interest groups for your code, so please make sure that 
 
 &nbsp;
 ## [Languages](chapter/6_languages.md)
-Each programming language has special mechanisms and some rules are only applicable to a certain language. Click on the following links to get to the main article for each language.
+Each programming language has special mechanisms and some rules are only applicable to a certain language. We also try to give an overview of language-specific rules, but the following list is unfinished. 
+<!-- TODO: add more languages and remove "unfinished" statement  -->
 
 * **[Python](chapter/lang/python-guide.md)**
 * **[C](chapter/lang/c-guide.md)**
@@ -297,11 +299,11 @@ Each programming language has special mechanisms and some rules are only applica
 
 &nbsp;
 ## References
-This guide is based on the principles that are explained in the following documents and books and we can recommend them as further reading material.
+This guide is partly based on the principles that are explained in the following documents and books and we can recommend them as further reading material.
 
- * [1] G. Van Rossum, B. Warsaw, and N. Coghlan: “PEP 8: Style Guide for Python Code”, Python.org, vol. 1565, 2001.
- * [2] S. McConnell: “Code Complete”, Pearson Education, 2004.
- * [3] R. C. Martin: “Clean Code: A Handbook of Agile Software Craftsmanship”, Pearson Education, 2009.
- * [4] R. C. Martin: “Clean Architecture: Guide to Software Structure and Design”, Pearson Education, 2017.
- * [5] E. Freeman et. al.: “Head First Design Patterns”, O’Reilly Media, 2008.
+ * [Cmpl] S. McConnell: [“Code Complete”](https://learning.oreilly.com/library/view/code-complete-second/0735619670/?ar), Pearson Education, 2004. 
+ * [ClCd] R. C. Martin: [“Clean Code: A Handbook of Agile Software Craftsmanship”](https://www.amazon.de/dp/0132350882), Pearson Education, 2009. [(Public Summary)](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29)
+ * [ClAr] R. C. Martin: [“Clean Architecture: Guide to Software Structure and Design”](https://learning.oreilly.com/library/view/clean-architecture-a/9780134494272/?ar), Pearson Education, 2017.
+ * [HdFi] E. Freeman et. al.: [“Head First Design Patterns”](https://learning.oreilly.com/library/view/head-first-design/9781492077992/?ar), 2nd Edition, O’Reilly Media, 2020.
+ * [PEP8] G. Van Rossum, B. Warsaw, and N. Coghlan: [“PEP 8: Style Guide for Python Code”](https://www.python.org/dev/peps/pep-0008/), Python.org, vol. 1565, 2001.
 
