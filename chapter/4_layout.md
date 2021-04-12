@@ -1,5 +1,3 @@
-
-
 ## Code Layout (Visual Appearance)
 A clear and consistent visual appearance of your code improves readability and readability helps to understand the code.
 

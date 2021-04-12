@@ -4,27 +4,27 @@
 &nbsp;
 # Software Design Guide
 
-The goal of this guide is to be concise, universal, and remarkable. It targets emerging code enthusiasts under time pressure and covers 6 topics:
+The goal of this guide is to be concise, universal, and remarkable. It targets emerging code enthusiasts under time pressure and covers 7 topics:
 
-  1. [Architecture](#user-content-architecture), 
-  2. [Implementation](#user-content-implementation), 
-  3. [Naming](#user-content-naming), 
-  4. [Code Layout](#user-content-code-layout), 
-  5. [Documentation](#user-content-documentation), and 
-  6. [Languages](#user-content-languages). 
+  1. [General Clarifications](#user-content-general-clarifications), 
+  2. [Architecture](#user-content-architecture), 
+  3. [Implementation](#user-content-implementation), 
+  4. [Naming](#user-content-naming), 
+  5. [Code Layout](#user-content-code-layout), 
+  6. [Documentation](#user-content-documentation), and 
+  7. [Languages](#user-content-languages). 
 
 To follow this guide, you should already have heard about Object Oriented Programming and know basic programming rules, such as writing loops and meaningful functions instead of copy pasting
-instructions. 
-In this Readme, we will shortly summarize the most important rules for every topic. More rules and details can be found if you follow the links at each heading. 
+instructions. In this Readme, we will shortly summarize the most important rules for every topic. 
 
 Since our brains are sieves, try to remember the underlying philosophy of this guide:
 
 > Keep it simple and solid, let the toolchain be smart,  
-> code correctness is the duty and readability the art.
+> code correctness is the duty, readability the art.
 
 
 &nbsp;
-## Clarifications First
+## [General Clarifications](#user-content-general-clarifications)
 
 ### Be Consistent with the Existent
 
@@ -39,6 +39,12 @@ important" [PEP8].
 Do not blindly follow this guide but think for yourself. The goal of
 software development is keeping the code complexity low. Period. None of
 the fancy patterns matters if the code becomes impossible to maintain.
+
+
+### Leave code cleaner than you found it.
+We all have seen bad code. We all have written bad code. Code gets messy by itself.
+Therefore, do not complain about bad code but improve it, right now. If you don't do it, probably no one will.
+
 
 
 
@@ -57,7 +63,8 @@ identifiers:
 
 
 &nbsp;
-## [Architecture](chapter/1_architecture.md)
+## [Architecture](#user-content-architecture)
+
 
 To manage complexity, divide your software into smaller parts (scopes)
 such as modules, classes, and subprograms. Where to separate and where
@@ -117,8 +124,7 @@ dashboard.show( warnings )
 > ⚠ **Caution:** *Mixing abstraction levels creates confusion and introduces unnecessary dependencies.*
 
 
-[Read more …](chapter/1_architecture.md)
-
+[Read more ...](chapter/1_architecture.md)
 
 
 
@@ -126,18 +132,27 @@ dashboard.show( warnings )
 
 
 &nbsp;
-## [Implementation](chapter/2_implementation.md)
+## [Implementation](#user-content-implementation)
 
 Once you have an initial plan for the architecture, you can start
 writing the code for classes and subprograms.
 
 
+
 ### Don't Repeat Yourself (DRY)
 
-Any piece of data or logic must have a single, unambiguous source. If
-you repeat more than 2 statements more than 2 times, write a new
+Any piece of data or logic should have a single source. 
+Duplicated code is difficult to maintain and represents a missed opportunity for abstraction.
+As a rule of thumb: If you repeat more than 2 statements more than 2 times, write a new
 subprogram. At best, any atomic change in program logic should only
 affect a single line of code.
+
+
+There are two code smells that should remind you of this rule:
+
+* **Copy & Paste:** Every time you take your mouse and mark lines with the intention to copy them, you are going to violate this rule. Instead of slightly adjusting copied lines, think about the common pattern between those lines and create a new function.
+
+* **Repeated `if-else` and `switch-case` statements:** If you are testing the same conditions at different locations (e.g. state variables), you can abstract these differences with Polymorphism and the Strategy Pattern.
 
 
 
@@ -178,6 +193,12 @@ if (isSpeeding && isNight){..}
 ```
 
 
+### Sort arguments and limit them to 0 – 4 per call.
+
+If the argument list of a subprogram grows too long, try to combine related arguments in a
+new data structure. For example, instead of passing `x`, `y`, `z`
+coordinates individually, use a single vector. 
+
 
 
 ### Do not change the same variable in steps but compose once from parts
@@ -204,12 +225,6 @@ totalIncome -= taxoffice[id].tax
 ```
 
 </td><td>
-<!-- <pre lang="c">
-Int totalIncome(employee){      
-    salary = getSalary(employee)
-    tax    = getTax(employee)   
-    return (salary - tax)
-</pre> -->
 
 ```c
 Int totalIncome(employee){      
@@ -222,22 +237,20 @@ Int totalIncome(employee){
 </td></tr></table>
 
 
-
-### Sort arguments and limit them to 0 – 4 per call.
-
-If the argument list of a subprogram grows too long, try to combine related arguments in a
-new data structure. For example, instead of passing `x`, `y`, `z`
-coordinates individually, use a single vector. 
+[Read more ...](chapter/2_implementation.md)
 
 
 
-[Read more …](chapter/2_implementation.md)
+
+
 
 
 
 &nbsp;
-## [Naming](chapter/3_naming.md)
+## [Naming](#user-content-naming)
 Code should communicate behavior to other humans with lower complexity than the behavior it inherits. Abstracting with meaningful names is therefore most important for readability.
+
+> ⚠ **Avoid inappropriate terms:** Many organizations discourage the use of `master/slave` due to their negative association in different cultures. See [1](https://www.drupal.org/node/2275877) and [2](https://bugs.python.org/issue34605).
 
 
 ### Subprograms (=Procedure/Function)
@@ -261,11 +274,36 @@ Procedures *may* return values, functions always return a value. Methods are sub
  * the prefix `n` or `num` should be used for names representing the total number of objects in a collection. E.g. `numCars`
  * boolean variables should start with a `is/has/can/does` prefix (e.g. `isEmpty`, `doesUseIO`).
  * write constant names in capitals. E.g `CFG_TEMPERATURE_MAX = 80.0`
- * prefix global and static variables with `g_` and `s_`
+ * prefix global variables with `g_`
+
+
+<table>
+<tr><td><strong>Bad ❌</strong></td><td><strong>Better ✔</strong></td></tr>
+<tr>
+<td>
+
+```python
+score_list = [0] * scores 
+for idx, val in score_list:
+  score_list = val + 1
+```
+
+</td><td>
+
+```python
+scores = [0] * numScores 
+for idx, score in scores:
+  scores[idx] = score + 1
+```
+
+</td></tr></table>
+
 
 
 ### Use word pairs (opposites, antonyms)
-If you “`start`” something, you should “`stop`” it and not “`end`” it. While most opposites can be created by using `un-` or `de-` prefixes (`lock/unlock`), some are more distinct and allow vertical code alignment:
+If you “`start`” something, you should “`stop`” it and not “`end`” it [CdCm]. 
+While most opposites can be created by using `un-` or `de-` prefixes (`lock/unlock`), some are more distinct and allow code alignment:
+
 
 Verb pairs with same length:
 
@@ -273,6 +311,11 @@ Verb pairs with same length:
 |-------|-------|--------|---------|---------|-------|--------|--------|----------|
 | `get` |`recv` |`reply` |`delete` |`detach` |`hide` |`merge` |`leave` |`reject`  |
 
+
+
+<details>
+<summary>👆 <strong>List of further word pairs</strong>
+</summary>
 
 Verb pairs that differ by one character are more visually distinct but still easy to align with one extra space:
 
@@ -288,86 +331,20 @@ Noun and adjective pairs with same/similar length:
 | `min` |`prev` |`tail` |`old` |`col` |`nak` |`rear`  |`target` |`server` |`replica` |`follower` |
 
 
-Avoid inappropriate terms: `master/slave`. See [1](https://www.drupal.org/node/2275877) and [2](https://bugs.python.org/issue34605).
+</details>&nbsp;
 
 
-<details>
-<summary><strong>ℹ List of common coding abbreviations</strong> (👆 click)
-</summary>
-
-| **Abbr.**  | **Meaning**  |
-|--------|------------|
-| `arg`  |  argument  |
-| `app`  |  application  |
-| `auth` |  authentication  |
-| `avg`  |  average   |
-| `bat`  |  battery   |
-| `buf`  |  buffer    |
-| `cb`   |  callback  |
-| `cfg`  |  config.   |
-| `clk`  |  clock     |
-| `col`  |  column    |
-| `cnt`  |  counter   |
-| `cmd`  |  command   |
-| `ctx`  |  context   |
-| `dev`  |  device    |
-| `doc`  |  document  |
-| `drv`  |  driver    |
-| `dt`   |  delta time  |
-| `el`   |  element   |
-| `env`  |  environment |
-| `err`  |  error     |
-| `exc`  |  exception |
-| `fh`   |  file handler |
-| `fmt`  |  format    |
-| `hdr`  |  header    |
-| `hex`  |  hexadecimal |
-| `img`  |  image     |
-| `idx`  |  index     |
-| `len`  |  length    |
-| `lib`  |  library   |
-| `lvl`  |  level     |
-| `max`  |  maximum   |
-| `mid`  |  middle    |
-| `min`  |  minimum   |
-| `mem`  |  memory    |
-| `mon`  |  monitor   |
-| `msg`  |  message   |
-| `net`  |  network   |
-| `num`  |  number    |
-| `obj`  |  object    |
-| `pkg`  |  package   |
-| `pkt`  |  packet    |
-| `pos`  |  position  |
-| `pt`   |  point     |
-| `ptr`  |  pointer   |
-| `pwr`  |  power     |
-| `px`   |  pixel     |
-| `rnd`  |  round     |
-| `reg`  |  register  |
-| `rot`  |  rotation  |
-| `sep`  |  separator |
-| `std`  |  standard  |
-| `str`  |  string    |
-| `sys`  |  system    |
-| `tmr`  |  timer     |
-| `ts`   |  timestamp |
-| `val`  |  value     |
-| `var`  |  variable  |
-| `win`  |  window    |
-
-</details>
+[Read more ...](chapter/3_naming.md)
 
 
-[Read more …](chapter/3_naming.md)
 
 
 
 &nbsp;
-## [Code Layout](chapter/4_layout.md)
+## [Code Layout](#user-content-layout)
 A clear and consistent visual appearance of your code improves readability and readability helps to understand the code.
 
- * Existing Project: Stick to the existing recommendations and tools.
+ * Existing Project: [Stick to the existing](#user-content-be-consistent-with-the-existent) recommendations and tools.
  * New Project: Use an automatic code layouter. Examples:
 
 | Language   | Tool   |   
@@ -378,16 +355,33 @@ A clear and consistent visual appearance of your code improves readability and r
 | JavaScript | [prettier.io](https://prettier.io/) |
 
 
+<details>
+<summary>👆 <strong>Read more ...</strong></summary>
+
+Here are some example recommendations that would be ensured by most layouters:
+ * aim for one statement and less than 80 characters per line
+ * indent with spaces not tabs because editors do not agree on tab width
+ * surround top-level function and class definitions with two or three blank lines.
+ * surround binary operators (=, ==, +) with a single space, except when nested inline
+ * break lines before operators and align operators vertically
+
+</details>
+
 
 
 &nbsp;
-## [Documentation](chapter/5_documentation.md)
+## [Documentation](#user-content-documentation)
 English is the language of programming, so documentation should also be in English.
 
 
-### Comments
-Comments that contradict the code are worse than no comments. Change comments when code changes.
-Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
+### Write brief comments of high quality
+Choose your words carefully. Comments that contradict the code are worse than no comments. Change comments when code changes. Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
+
+* Don't comment out code. Just remove.
+* Do not create headings with S E P A R A T E D letters because it's hard to search for them.
+* Do not assume insider knowledge but write simple comments for anybody on the planet.
+* Do not make jokes in comments. Tell them in person.
+
 
 
 ### Use `TODO` and `FIXME` tags.
@@ -395,11 +389,42 @@ Comment unfinished work with `TODO:` or `FIXME:`, which allows to search & find 
 A `TODO` is more urgent and needs to be done, a `FIXME` would be nice to have but is not required.
 
 
-### Readme Files
+### Write Readme Files
 There are two different interest groups for your code, so please make sure that your Readme addresses both.
 
  * **Users:** How to install and run your code with examples. Supported OS. Release versions and change logs.
  * **Developers:** How to compile. Module structure, dependencies, contribution rules, where to contact developers.  
+
+
+### Write File Headers
+Each code file should start with a block comment that states what this module/class/lib does.
+
+
+### Use Docstrings for public APIs
+Docstrings are specially formatted comments that can be converted into a code documentation. This is useful as soon as other people start to depend on your interfaces.
+
+
+<details>
+<summary>👆 <strong>Docstring Example</strong></summary>
+
+```c
+/**
+ * Solves equations of the form a * x = b
+ * @example
+ * // returns 2
+ * globalNS.method1(5, 10);
+ * @example
+ * // returns 3
+ * globalNS.method(5, 15);
+ * @returns {Number} Returns the value of x for the equation.
+ */
+globalNS.method1 = function (a, b) {
+    return b / a;
+};
+```
+
+</details>
+
 
 
 
@@ -420,12 +445,26 @@ Each programming language has special mechanisms and some rules are only applica
 
 &nbsp;
 ## References
-This guide is partly based on the principles that are explained in the following documents and books and we can recommend them as further reading material. Students from TUM and other universities can read the books for free. Simply click the links below and login with your university credentials. 
+This guide is partly based on the principles that are explained in the following books and documents and we can recommend them as further reading material. 
 
+#### General Design Principles
+Students from TUM and other universities can read these books for free. Simply click the links below and login with your university credentials. 
 
- * [Cmpl] S. McConnell: [“Code Complete”](https://learning.oreilly.com/library/view/code-complete-second/0735619670/?ar), Pearson Education, 2004. 
- * [ClCd] R. C. Martin: [“Clean Code: A Handbook of Agile Software Craftsmanship”](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/?ar), Pearson Education, 2009. [(Public Summary)](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29)
+ * [CdCm] S. McConnell: [“Code Complete”](https://learning.oreilly.com/library/view/code-complete-second/0735619670/?ar), Pearson Education, 2004. 
+ * [ClCd] R. C. Martin: [“Clean Code: A Handbook of Agile Software Craftsmanship”](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/?ar), Pearson Education, 2009.
  * [ClAr] R. C. Martin: [“Clean Architecture: Guide to Software Structure and Design”](https://learning.oreilly.com/library/view/clean-architecture-a/9780134494272/?ar), Pearson Education, 2017.
  * [HdFi] E. Freeman et al.: [“Head First Design Patterns”](https://learning.oreilly.com/library/view/head-first-design/9781492077992/?ar), 2nd Edition, O’Reilly Media, 2020.
- * [PEP8] G. Van Rossum, B. Warsaw, and N. Coghlan: [“PEP 8: Style Guide for Python Code”](https://www.python.org/dev/peps/pep-0008/), Python.org, vol. 1565, 2001.
+
+
+
+#### Language Specific Coding Guidelines
+<!-- The following guidelines target specific languages and give details about which language constructs to prefer and which to avoid. -->
+
+* [PEP8] G. Van Rossum, B. Warsaw, and N. Coghlan: [“PEP 8: Style Guide for Python Code”](https://www.python.org/dev/peps/pep-0008/), Python.org, 2001.
+* [MISRA-C] Motor Industry Software Reliability Association: “Guidelines for the use of the C language in critical systems.”, 2004
+* [MISRA-C++] Motor Industry Software Reliability Association: “Guidelines for the use of the C++ language in critical systems.”, 2008
+* [JPL-C]  [JPL Institutional Coding Standard for the C Programming Language](https://yurichev.com/mirrors/C/JPL_Coding_Standard_C.pdf)
+* [C++ coding style (JSF+MISRA)](http://micro-os-plus.github.io/develop/coding-style/): 
+* [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
+* [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
 
