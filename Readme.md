@@ -1,5 +1,5 @@
-<!-- <img align="right" src="img/tum-logo-large.svg">[Professorship of Embedded Systems and Internet of Things](https://www.ei.tum.de/esi/)<br>[Technical University of Munich](https://www.tum.de/)   -->
 <img width="100%" src="img/tum-ei-esi-header.svg">
+
 
 &nbsp;
 # Software Design Guide
@@ -23,6 +23,7 @@ Since our brains are sieves, try to remember the underlying philosophy of this g
 > code correctness is the duty, readability the art.
 
 
+
 &nbsp;
 ## [General Clarifications](#user-content-general-clarifications)
 
@@ -42,8 +43,8 @@ the fancy patterns matters if the code becomes impossible to maintain.
 
 
 ### Leave code cleaner than you found it.
-We all have seen bad code. We all have written bad code. Code gets messy by itself.
-Therefore, do not complain about bad code but improve it, right now. If you don't do it, probably no one will.
+We all have seen bad code, we all have written bad code. Code tends to get messy by itself.
+Therefore, do not only complain about bad code but improve it if you know how. If *you* don't care to do it, why should anyone else?
 
 
 
@@ -156,7 +157,7 @@ There are two code smells that should remind you of this rule:
 
 
 
-### Keep all scopes (File/Class/Function) small and sorted
+### Keep all scopes (file/class/function) small and sorted
 
 Define subprograms and variables in the smallest scope possible and limit
 their exposure to external code. Put all declarations at the beginning
@@ -164,12 +165,12 @@ of each scope and initialize variables directly at the declaration. Do
 not reuse variables in nested scopes or for different purposes.
 
 
-### Express Ideas in Code: Use Domain-Specific Names
+### Express ideas in code: use domain-specific names
 
 Avoid magic numbers (literal numbers with unclear origin/purpose) 
 but always create constants with meaningful names. 
 Create new types or derive subtypes from primitives to create more
-specific names. Especially for physical quantities. 
+specific names, especially for physical quantities. 
 
 
 **Bad ❌**
@@ -341,7 +342,7 @@ Noun and adjective pairs with same/similar length:
 
 
 &nbsp;
-## [Code Layout](#user-content-layout)
+## [Code Layout](#user-content-code-layout)
 A clear and consistent visual appearance of your code improves readability and readability helps to understand the code.
 
  * Existing Project: [Stick to the existing](#user-content-be-consistent-with-the-existent) recommendations and tools.

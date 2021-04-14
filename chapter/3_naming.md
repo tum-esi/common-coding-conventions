@@ -18,7 +18,7 @@ Procedures *may* return values, functions always return a value. Methods are sub
 
 
 
-#### Types (=Class/Struct/Subtypes)
+### Types (=Class/Struct/Subtypes)
  * type names should be capitalized nouns. E.g. `Integer`, `Date`, `Line2D`
  * Enums/Structs are types and named as types without a special prefix/suffix.
  * Interface names should start with a capital `I` and can also be adjectives. E.g. `IObservable`
@@ -30,7 +30,7 @@ Procedures *may* return values, functions always return a value. Methods are sub
    * `Handler`: waits for and processes a single-type object, without owning it (e.g. `EventHandler`).
 
 
-#### Variables
+### Variables
  * variables with a large scope *should* have long names, variables with a small scope *can* have short names.
  * collections (set, array, dict) should have a plural name. E.g. `cars`, `indices`
  * the prefix `n` or `num` should be used for names representing the total number of objects in a collection. E.g. `nCars`
@@ -61,12 +61,12 @@ for	idx, score in scores:
 </td></tr></table>
 
 
-#### High-level Scopes (= Module/Package/Namespace)
+### High-level Scopes (= Module/Package/Namespace)
 The names for packages or namespaces, which should prevent name clashes, should be short as they are used often within the code.
 In this case, choosing an abbreviation or acronym makes sense.
 
 
-#### Use abbreviations cautiously and only common ones.
+### Use abbreviations cautiously and only common ones.
 To abbr. or not to abbreviate? Truth is, neither `GetTheLatestWebSiteAccessTimeInMilliseconds()`, nor `pm_rcv_bat_stat()` are reader friendly. 
 Use abbreviations only for small scopes, function arguments, or in combination with full names (`move_cmd`).
 Avoid abbreviations if they only save one character (`usr`), are too cryptic (`cmp`), or can be confused with other terms (`tmp`). If you use them, stick to the following common abbreviations (already a lot):
@@ -132,7 +132,7 @@ Avoid these abbr.: `tmp`, `fun`, `chk`, `dis`, `usr`, `cpy`, `tgl`, `txt`, `pc`,
 
 
 
-#### Use word pairs (opposites, antonyms)
+### Use word pairs (opposites, antonyms)
 If you “`start`” something, you should “`stop`” it and not “`end`” it. While most opposites can be created by using `un-` or `de-` prefixes (`lock/unlock`), some are more distinct and allow vertical code alignment:
 
 Verb pairs with same length:
