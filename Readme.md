@@ -2,9 +2,9 @@
 
 
 &nbsp;
-# Software Design Guide
+# C³: Common Coding Conventions
 
-The goal of this guide is to be concise, universal, and remarkable. It targets emerging code enthusiasts under time pressure and covers 7 topics:
+The goal of these conventions is to be concise, universal, and remarkable. It targets emerging code enthusiasts under time pressure and covers 7 topics:
 
   1. [General Clarifications](#user-content-general-clarifications), 
   2. [Architecture](#user-content-architecture), 
@@ -14,7 +14,7 @@ The goal of this guide is to be concise, universal, and remarkable. It targets e
   6. [Documentation](#user-content-documentation), and 
   7. [Languages](#user-content-languages). 
 
-To follow this guide, you should already have heard about Object Oriented Programming and know basic programming rules, such as writing loops and meaningful functions instead of copy pasting
+To follow this guide, you should already have heard about [Object Oriented Programming](https://www.educative.io/blog/object-oriented-programming) and know basic programming rules, such as writing loops and meaningful functions instead of copy pasting
 instructions. In this Readme, we will shortly summarize the most important rules for every topic. 
 
 Since our brains are sieves, try to remember the underlying philosophy of this guide:
@@ -27,7 +27,7 @@ Since our brains are sieves, try to remember the underlying philosophy of this g
 &nbsp;
 ## [General Clarifications](#user-content-general-clarifications)
 
-### Be Consistent with the Existent
+### Be consistent with the existent.
 
 "Consistency with this guide is important. Consistency within a project
 is more important. Consistency within one module or function is the most
@@ -55,7 +55,7 @@ To be universal, we group several concepts under these broad
 identifiers:
 
 
- * **Scope**       = {Module, File Namespace, Subprogram}                
+ * **Scope**       = {Module, File, Namespace, Subprogram}                
  * **Subprogram**  = {Procedure, Function, Method}
  * **Type**        = {Primitive, Collection, Struct, Class, ...}   
  * **Collection**  = {Array, List, Tuple, Dict, Map, ...}
@@ -82,7 +82,7 @@ Instead, limit the amount and direction of information exchange between classes 
 
 
 
-### Aim for low coupling between classes
+### Aim for low coupling between classes.
 
 You may have many classes but each class should communicate with as few
 others as possible. If any two classes communicate at all, they should
@@ -90,7 +90,7 @@ exchange as little information as possible.
 
 
 
-### Aim for coherent abstraction levels
+### Aim for coherent abstraction levels.
 
 Each scope should reflect a single coherent level of abstraction that
 corresponds to its hierarchy level. In your UML, abstraction should
@@ -140,7 +140,7 @@ writing the code for classes and subprograms.
 
 
 
-### Don't Repeat Yourself (DRY)
+### Don't Repeat Yourself (DRY).
 
 Any piece of data or logic should have a single source. 
 Duplicated code is difficult to maintain and represents a missed opportunity for abstraction.
@@ -157,7 +157,7 @@ There are two code smells that should remind you of this rule:
 
 
 
-### Keep all scopes (file/class/function) small and sorted
+### Keep all scopes (file/class/function) small and sorted.
 
 Define subprograms and variables in the smallest scope possible and limit
 their exposure to external code. Put all declarations at the beginning
@@ -165,7 +165,7 @@ of each scope and initialize variables directly at the declaration. Do
 not reuse variables in nested scopes or for different purposes.
 
 
-### Express ideas in code: use domain-specific names
+### Express ideas in code: use domain-specific names.
 
 Avoid magic numbers (literal numbers with unclear origin/purpose) 
 but always create constants with meaningful names. 
@@ -202,7 +202,7 @@ coordinates individually, use a single vector.
 
 
 
-### Do not change the same variable in steps but compose once from parts
+### Do not change the same variable in steps but compose once from parts.
 
 Within a subprogram, do not modify the same variable in several steps,
 e.g. by summing up an amount using `total += ...` multiple times.
@@ -301,7 +301,7 @@ for idx, score in scores:
 
 
 
-### Use word pairs (opposites, antonyms)
+### Use word pairs (opposites, antonyms).
 If you “`start`” something, you should “`stop`” it and not “`end`” it [CdCm]. 
 While most opposites can be created by using `un-` or `de-` prefixes (`lock/unlock`), some are more distinct and allow code alignment:
 
@@ -315,8 +315,7 @@ Verb pairs with same length:
 
 
 <details>
-<summary>👆 <strong>List of further word pairs</strong>
-</summary>
+<summary>👆 <strong><ins>List of further word pairs</ins></strong></summary>
 
 Verb pairs that differ by one character are more visually distinct but still easy to align with one extra space:
 
@@ -357,7 +356,7 @@ A clear and consistent visual appearance of your code improves readability and r
 
 
 <details>
-<summary>👆 <strong>Read more ...</strong></summary>
+<summary>👆 <strong><ins>Read more ...</ins></strong></summary>
 
 Here are some example recommendations that would be ensured by most layouters:
  * aim for one statement and less than 80 characters per line
@@ -375,13 +374,15 @@ Here are some example recommendations that would be ensured by most layouters:
 English is the language of programming, so documentation should also be in English.
 
 
-### Write brief comments of high quality
+### Write brief comments of high quality.
 Choose your words carefully. Comments that contradict the code are worse than no comments. Change comments when code changes. Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
 
+Further Don'ts:
+
 * Don't comment out code. Just remove.
-* Do not create headings with S E P A R A T E D letters because it's hard to search for them.
-* Do not assume insider knowledge but write simple comments for anybody on the planet.
-* Do not make jokes in comments. Tell them in person.
+* Don't create headings with S E P A R A T E D letters because it's hard to search for them.
+* Don't assume insider knowledge but write simple comments for anybody on the planet.
+* Don't make jokes in comments. Tell them in person.
 
 
 
@@ -390,15 +391,15 @@ Comment unfinished work with `TODO:` or `FIXME:`, which allows to search & find 
 A `TODO` is more urgent and needs to be done, a `FIXME` would be nice to have but is not required.
 
 
-### Write Readme Files
+### Write Readme files.
 There are two different interest groups for your code, so please make sure that your Readme addresses both.
 
  * **Users:** How to install and run your code with examples. Supported OS. Release versions and change logs.
  * **Developers:** How to compile. Module structure, dependencies, contribution rules, where to contact developers.  
 
 
-### Write File Headers
-Each code file should start with a block comment that states what this module/class/lib does.
+### Write file headers for header files.
+Each code file with interfaces (e.g. `.h` files in C) should start with a block comment that briefly explains what this module/class/lib does.
 
 
 ### Use Docstrings for public APIs
@@ -406,7 +407,7 @@ Docstrings are specially formatted comments that can be converted into a code do
 
 
 <details>
-<summary>👆 <strong>Docstring Example</strong></summary>
+<summary>👆 <strong><ins>Docstring Example</ins></strong></summary>
 
 ```c
 /**
@@ -458,7 +459,7 @@ Students from TUM and other universities can read these books for free. Simply c
 
 
 
-#### Language Specific Coding Guidelines
+#### Language Specific Coding Conventions
 <!-- The following guidelines target specific languages and give details about which language constructs to prefer and which to avoid. -->
 
 * [PEP8] G. Van Rossum, B. Warsaw, and N. Coghlan: [“PEP 8: Style Guide for Python Code”](https://www.python.org/dev/peps/pep-0008/), Python.org, 2001.

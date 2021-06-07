@@ -21,6 +21,9 @@ A model (program logic+states) is the heart of each module and
 operations on the open heart are dangerous. Therefore, larger modules
 should protect the model from
 
+* direct input by having a controller that preprocesses requests
+* direct output by having one or more views that provide different output formats
+
 External modules can access the controller (if they want to change the
 model's state) or access the views (if they want to know the model's
 state). See
