@@ -1,6 +1,7 @@
 ### C Specific Advice
 
 #### Object Oriented Programming in C
+
 C does not support real OOP but the following rules can help to transfer some ideas of OOP to C.
 
 * **Think of a file as a class:** Functions that appear in the header file are public, while functions that only appear in the `.c` files are private.

@@ -128,7 +128,7 @@ dashboard.show( warnings )
 > ⚠ **Caution:** *Mixing abstraction levels creates confusion and introduces unnecessary dependencies.*
 
 
-[Read more ...](chapter/1_architecture.md)
+[Read more ...](chapter/2_architecture.md)
 
 
 
@@ -241,7 +241,7 @@ Int totalIncome(employee){
 </td></tr></table>
 
 
-[Read more ...](chapter/2_implementation.md)
+[Read more ...](chapter/3_implementation.md)
 
 
 
@@ -340,7 +340,7 @@ Noun and adjective pairs with same/similar length:
 
 </details>&nbsp;
 
-[Read more ...](chapter/3_naming.md)
+[Read more ...](chapter/4_naming.md)
 
 
 
@@ -453,11 +453,12 @@ globalNS.method = function (a, b) {
 &nbsp;
 ## [Languages](chapter/6_languages.md)
 
-Each programming language has special mechanisms and some rules are only applicable to a certain language. We also try to give an overview of language-specific rules, but the following list is unfinished. 
+Each programming language has special mechanisms and some rules are only applicable to a certain language. We also try to give an overview of language-specific rules, but the following list is unfinished and work in progress. 
 <!-- TODO: add more languages and remove "unfinished" statement  -->
 
 * **[Python](chapter/lang/python-guide.md)**
 * **[C](chapter/lang/c-guide.md)**
+* **[JavaScript](chapter/lang/javascript-guide.md)**
 
 
 

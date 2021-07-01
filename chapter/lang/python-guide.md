@@ -1,22 +1,30 @@
 ### Python Specific Advice 
 
+
 #### OOP in Python
+
  * Use `raise NotImplementedError` to indicate abstract methods.
  * private attributes/functions should start with `_` in their name, e.g. `_secret`
 
+
+
 #### General Coding
+
  * Separate large numbers with underscores. Prefer `1_000_000` over `1000000`.
  * Use `_` for unused variables: `_, extension = 'foobar.txt'.split('.')`
  * constants are indicated by all uppercase names.
  * Create own types by assigning a base type to a name, e.g. `Volt = float`
 
+
+
 #### Further down the Pythonic road
+
  * Use context managers when reading files or acquiring locks/semaphores.\
  `with open('file.txt', 'r') as f:`
  * Use for-loops that iterate over what you actually need:
- * Elements: `for car in cars:`
- * Index and Element: `for idx, car in enumerate(cars):`
- * Elements of multiple lists: `for car, driver in zip(cars, drivers):`
+   - Elements: `for car in cars:`
+   - Index and Element: `for idx, car in enumerate(cars):`
+   - Elements of multiple lists: `for car, driver in zip(cars, drivers):`
 
 
 **Example**
