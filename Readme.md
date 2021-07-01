@@ -24,14 +24,16 @@ Since our brains are sieves, try to remember the underlying philosophy of this g
 
 
 
+
+
 &nbsp;
 ## [General Clarifications](#user-content-general-clarifications)
 
 ### Be consistent with the existent.
 
-"Consistency with this guide is important. Consistency within a project
+“Consistency with this guide is important. Consistency within a project
 is more important. Consistency within one module or function is the most
-important" [PEP8].
+important” [PEP8].
 
 
 
@@ -42,10 +44,11 @@ software development is keeping the code complexity low. Period. None of
 the fancy patterns matters if the code becomes impossible to maintain.
 
 
-### Leave code cleaner than you found it.
-We all have seen bad code, we all have written bad code. Code tends to get messy by itself.
-Therefore, do not only complain about bad code but improve it if you know how. If *you* don't care to do it, why should anyone else?
 
+### Leave code cleaner than you found it.
+
+We all have seen bad code, we all have written bad code. Code tends to get messy over time.
+Therefore, do not only complain about bad code but improve it if you know how. If *you* don't care to do it, why should anyone else?
 
 
 
@@ -63,9 +66,9 @@ identifiers:
 
 
 
+
 &nbsp;
 ## [Architecture](#user-content-architecture)
-
 
 To manage complexity, divide your software into smaller parts (scopes)
 such as modules, classes, and subprograms. Where to separate and where
@@ -93,7 +96,7 @@ exchange as little information as possible.
 ### Aim for coherent abstraction levels.
 
 Each scope should reflect a single coherent level of abstraction that
-corresponds to its hierarchy level. In your UML, abstraction should
+corresponds to its hierarchy level [ClCd]. In your UML, abstraction should
 decrease from top to bottom. In your code, the deeper you are in a call
 tree, the more specific your instructions can be. Avoid state variables
 at high abstraction levels.
@@ -148,7 +151,6 @@ As a rule of thumb: If you repeat more than 2 statements more than 2 times, writ
 subprogram. At best, any atomic change in program logic should only
 affect a single line of code.
 
-
 There are two code smells that should remind you of this rule:
 
 * **Copy & Paste:** Every time you take your mouse and mark lines with the intention to copy them, you are going to violate this rule. Instead of slightly adjusting copied lines, think about the common pattern between those lines and create a new function.
@@ -160,9 +162,10 @@ There are two code smells that should remind you of this rule:
 ### Keep all scopes (file/class/function) small and sorted.
 
 Define subprograms and variables in the smallest scope possible and limit
-their exposure to external code. Put all declarations at the beginning
+their exposure to external code. Put declarations at the beginning
 of each scope and initialize variables directly at the declaration. Do
 not reuse variables in nested scopes or for different purposes.
+
 
 
 ### Express ideas in code: use domain-specific names.
@@ -194,6 +197,7 @@ if (isSpeeding && isNight){..}
 ```
 
 
+
 ### Sort arguments and limit them to 0 – 4 per call.
 
 If the argument list of a subprogram grows too long, try to combine related arguments in a
@@ -209,7 +213,6 @@ e.g. by summing up an amount using `total += ...` multiple times.
 Instead, call functions that return some part of the final value and
 then compose the final value of these parts in one instruction at the
 end. E.g. `total = partA + partB`.
-
 
 
 <table>
@@ -245,16 +248,17 @@ Int totalIncome(employee){
 
 
 
-
-
 &nbsp;
 ## [Naming](#user-content-naming)
+
 Code should communicate behavior to other humans with lower complexity than the behavior it inherits. Abstracting with meaningful names is therefore most important for readability.
 
 > ⚠ **Avoid inappropriate terms:** Many organizations discourage the use of `master/slave` due to their negative association in different cultures. See [1](https://www.drupal.org/node/2275877) and [2](https://bugs.python.org/issue34605).
 
 
+
 ### Subprograms (=Procedure/Function)
+
 Procedures *may* return values, functions always return a value. Methods are subprograms of a class.
  * procedure names should start with a verb. e.g. `syncViews()`, `list.addItem(x)`.
  * function names should describe the result and, if suitable, its type. e.g. `time_ms(), sin(x)`
@@ -263,14 +267,18 @@ Procedures *may* return values, functions always return a value. Methods are sub
 > ⚠ **Caution:** *Single noun subprograms should be pure functions! Never let e.g. `x.length()` change a state.*
 
 
+
 ### Types (=Class/Struct/Subtypes)
+
  * type names should be capitalized nouns. E.g. `Integer`, `Date`, `Line2D`
  * Enums/Structs are types and named as types without a special prefix/suffix.
  * Interface names should start with a capital `I` and can also be adjectives. E.g. `IObservable`
 
 
+
 ### Variables
- * variables with a large scope *should* have long names, variables with a small scope *may* have short names.
+
+ * variables with a large scope *should* have long names, variables with a small scope *may* have short names [CdCm].
  * collections (set, array, dict) should have a plural name. E.g. `cars`, `indices`
  * the prefix `n` or `num` should be used for names representing the total number of objects in a collection. E.g. `numCars`
  * boolean variables should start with a `is/has/can/does` prefix (e.g. `isEmpty`, `doesUseIO`).
@@ -302,16 +310,15 @@ for idx, score in scores:
 
 
 ### Use word pairs (opposites, antonyms).
+
 If you “`start`” something, you should “`stop`” it and not “`end`” it [CdCm]. 
 While most opposites can be created by using `un-` or `de-` prefixes (`lock/unlock`), some are more distinct and allow code alignment:
-
 
 Verb pairs with same length:
 
 | `set` |`send` |`query` |`insert` |`attach` |`show` |`split` |`enter` |`accept`  |
 |-------|-------|--------|---------|---------|-------|--------|--------|----------|
 | `get` |`recv` |`reply` |`delete` |`detach` |`hide` |`merge` |`leave` |`reject`  |
-
 
 
 <details>
@@ -333,7 +340,6 @@ Noun and adjective pairs with same/similar length:
 
 </details>&nbsp;
 
-
 [Read more ...](chapter/3_naming.md)
 
 
@@ -342,6 +348,7 @@ Noun and adjective pairs with same/similar length:
 
 &nbsp;
 ## [Code Layout](#user-content-code-layout)
+
 A clear and consistent visual appearance of your code improves readability and readability helps to understand the code.
 
  * Existing Project: [Stick to the existing](#user-content-be-consistent-with-the-existent) recommendations and tools.
@@ -369,13 +376,18 @@ Here are some example recommendations that would be ensured by most layouters:
 
 
 
+
+
 &nbsp;
 ## [Documentation](#user-content-documentation)
+
 English is the language of programming, so documentation should also be in English.
 
 
+
 ### Write brief comments of high quality.
-Choose your words carefully. Comments that contradict the code are worse than no comments. Change comments when code changes. Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
+
+Choose your words carefully. “Comments that contradict the code are worse than no comments” [PEP8]. Change comments when code changes. Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
 
 Further Don'ts:
 
@@ -387,22 +399,29 @@ Further Don'ts:
 
 
 ### Use `TODO` and `FIXME` tags.
+
 Comment unfinished work with `TODO:` or `FIXME:`, which allows to search & find these lines later. Some IDEs will automatically highlight these tags via [extensions](https://open-vsx.org/extension/wayou/vscode-todo-highlight).
 A `TODO` is more urgent and needs to be done, a `FIXME` would be nice to have but is not required.
 
 
+
 ### Write Readme files.
+
 There are two different interest groups for your code, so please make sure that your Readme addresses both.
 
  * **Users:** How to install and run your code with examples. Supported OS. Release versions and change logs.
  * **Developers:** How to compile. Module structure, dependencies, contribution rules, where to contact developers.  
 
 
+
 ### Write file headers for header files.
+
 Each code file with interfaces (e.g. `.h` files in C) should start with a block comment that briefly explains what this module/class/lib does.
 
 
+
 ### Use Docstrings for public APIs
+
 Docstrings are specially formatted comments that can be converted into a code documentation. This is useful as soon as other people start to depend on your interfaces.
 
 
@@ -414,13 +433,13 @@ Docstrings are specially formatted comments that can be converted into a code do
  * Solves equations of the form a * x = b
  * @example
  * // returns 2
- * globalNS.method1(5, 10);
+ * globalNS.method(5, 10);
  * @example
  * // returns 3
  * globalNS.method(5, 15);
  * @returns {Number} Returns the value of x for the equation.
  */
-globalNS.method1 = function (a, b) {
+globalNS.method = function (a, b) {
     return b / a;
 };
 ```
@@ -431,9 +450,9 @@ globalNS.method1 = function (a, b) {
 
 
 
-
 &nbsp;
 ## [Languages](chapter/6_languages.md)
+
 Each programming language has special mechanisms and some rules are only applicable to a certain language. We also try to give an overview of language-specific rules, but the following list is unfinished. 
 <!-- TODO: add more languages and remove "unfinished" statement  -->
 
@@ -444,12 +463,15 @@ Each programming language has special mechanisms and some rules are only applica
 
 
 
-
 &nbsp;
 ## References
+
 This guide is partly based on the principles that are explained in the following books and documents and we can recommend them as further reading material. 
 
+
+
 #### General Design Principles
+
 Students from TUM and other universities can read these books for free. Simply click the links below and login with your university credentials. 
 
  * [CdCm] S. McConnell: [“Code Complete”](https://learning.oreilly.com/library/view/code-complete-second/0735619670/?ar), Pearson Education, 2004. 
@@ -461,7 +483,6 @@ Students from TUM and other universities can read these books for free. Simply c
 
 #### Language Specific Coding Conventions
 <!-- The following guidelines target specific languages and give details about which language constructs to prefer and which to avoid. -->
-
 * [PEP8] G. Van Rossum, B. Warsaw, and N. Coghlan: [“PEP 8: Style Guide for Python Code”](https://www.python.org/dev/peps/pep-0008/), Python.org, 2001.
 * [MISRA-C] Motor Industry Software Reliability Association: “Guidelines for the use of the C language in critical systems.”, 2004
 * [MISRA-C++] Motor Industry Software Reliability Association: “Guidelines for the use of the C++ language in critical systems.”, 2008
@@ -469,4 +490,3 @@ Students from TUM and other universities can read these books for free. Simply c
 * [C++ coding style (JSF+MISRA)](http://micro-os-plus.github.io/develop/coding-style/): 
 * [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 * [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
-
