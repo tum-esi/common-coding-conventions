@@ -113,7 +113,6 @@ nStartUps += 1
 if fuelTank.isEmpty():
   fuelGaugeUI.setRedLED()
 ```
-
 </td><td>
 
 ```python
@@ -122,7 +121,6 @@ engine.runTest():
 warnings = engine.warnings()
 dashboard.show( warnings )
 ```
-
 </td></tr></table>
 
 > ⚠ **Caution:** *Mixing abstraction levels creates confusion and introduces unnecessary dependencies.*
@@ -183,7 +181,7 @@ from_to(int x,  int y,
         int x2, int y2);     // vague argument names 
 
 if (speed > limit && 
-   t.h > 22 && t.h < 6){..}  // 22 and 6 are magic numbers
+   t.h > 22 && t.h < 6){ ... }  // 22 and 6 are magic numbers
 ```
 
 **Better ✔**
@@ -193,7 +191,7 @@ drive(Point origin, Point dest);
 
 isNight    = (T_NIGHT_MIN < t.h && t.h < T_NIGHT_MAX);
 isSpeeding = (limit < speed);
-if (isSpeeding && isNight){..}
+if (isSpeeding && isNight){ ... }
 ```
 
 
@@ -271,8 +269,9 @@ Procedures *may* return values, functions always return a value. Methods are sub
 ### Types (=Class/Struct/Subtypes)
 
  * type names should be capitalized nouns. E.g. `Integer`, `Date`, `Line2D`
- * Enums/Structs are types and named as types without a special prefix/suffix.
- * Interface names should start with a capital `I` and can also be adjectives. E.g. `IObservable`
+ * enums/structs are types and named as types without a special prefix/suffix.<br>
+   E.g. `enum Color = {RED, GREEN, BLUE}`
+ * interface names can start with a capital `I` and can also be adjectives. E.g. `IObservable`
 
 
 
@@ -352,7 +351,7 @@ Noun and adjective pairs with same/similar length:
 A clear and consistent visual appearance of your code improves readability and readability helps to understand the code.
 
  * Existing Project: [Stick to the existing](#user-content-be-consistent-with-the-existent) recommendations and tools.
- * New Project: Use an automatic code layouter. Examples:
+ * New Project: Use an automatic code formatter. Examples:
 
 | Language   | Tool   |   
 |:-----------|--------|
@@ -365,7 +364,7 @@ A clear and consistent visual appearance of your code improves readability and r
 <details>
 <summary>👆 <strong><ins>Read more ...</ins></strong></summary>
 
-Here are some example recommendations that would be ensured by most layouters:
+Here are some example recommendations that would be ensured by most formatters:
  * aim for one statement and less than 80 characters per line
  * indent with spaces not tabs because editors do not agree on tab width
  * surround top-level function and class definitions with two or three blank lines.
@@ -392,7 +391,7 @@ Choose your words carefully. “Comments that contradict the code are worse than
 Further Don'ts:
 
 * Don't comment out code. Just remove.
-* Don't create headings with S E P A R A T E D letters because it's hard to search for them.
+* Don't create headings with S E P A R A T E D letters because you cannot search for them.
 * Don't assume insider knowledge but write simple comments for anybody on the planet.
 * Don't make jokes in comments. Tell them in person.
 
