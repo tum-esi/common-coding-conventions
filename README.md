@@ -1,27 +1,50 @@
-<img width="100%" src="img/tum-ei-esi-header.svg">
+<a href="https://www.ei.tum.de/esi" ><img width="100%" src="img/tum-ei-esi-header.svg"></a>
 
 
 &nbsp;
 # C³: Common Coding Conventions
 
-The goal of these conventions is to be concise, universal, and remarkable. It targets emerging code enthusiasts under time pressure and covers 7 topics:
-
-  1. [General Clarifications](#user-content-general-clarifications), 
-  2. [Architecture](#user-content-architecture), 
-  3. [Implementation](#user-content-implementation), 
-  4. [Naming](#user-content-naming), 
-  5. [Code Layout](#user-content-code-layout), 
-  6. [Documentation](#user-content-documentation), and 
-  7. [Languages](#user-content-languages). 
-
-To follow this guide, you should already have heard about [Object Oriented Programming](https://www.educative.io/blog/object-oriented-programming) and know basic programming rules, such as writing loops and meaningful functions instead of copy pasting
-instructions. In this Readme, we will shortly summarize the most important rules for every topic. 
-
-Since our brains are sieves, try to remember the underlying philosophy of this guide:
-
 > Keep it simple and solid, let the toolchain be smart,  
 > code correctness is the duty, readability the art.
 
+
+The goal of these conventions is to be concise, universal, and remarkable. It targets emerging code enthusiasts under time pressure and covers 7 topics:
+
+  1. [**General Clarifications**](#user-content-general-clarifications) &emsp;
+      ([Keep Consistency](#user-content-be-consistent-with-the-existent) • 
+       [Break rules](#user-content-break-rules-if-it-enhances-clarity) • 
+       [Improve Code](#user-content-leave-code-cleaner-than-you-found-it) •
+       [Terms](#user-content-terminology))
+  2. [**Architecture**](#user-content-architecture) &emsp; 
+      ([Low Coupling](#user-content-aim-for-low-coupling-between-classes) • 
+       [Coherent Abstraction](#user-content-aim-for-coherent-abstraction-levels))
+  3. [**Implementation**](#user-content-implementation) &emsp;
+      ([DRY](#user-content-dont-repeat-yourself-dry) • 
+       [Small Scopes](#user-content-keep-all-scopes-fileclassfunction-small-and-sorted) • 
+       [Express Ideas](#user-content-express-ideas-in-code-use-domain-specific-names) • 
+       [Sort Args](#user-content-sort-arguments-and-limit-them-to-0--4-per-call) • 
+       [Compose](#user-content-do-not-change-the-same-variable-in-steps-but-compose-once-from-parts))
+  4. [**Naming**](#user-content-naming) &emsp;
+      ([Subprograms](#user-content-subprograms-procedurefunction) • 
+       [Types](#user-content-types-classstructsubtypes) • 
+       [Variables](#user-content-variables) • 
+       [Word Pairs](#user-content-use-word-pairs-opposites-antonyms))
+  5. [**Code Layout**](#user-content-code-layout) 
+  6. [**Documentation**](#user-content-documentation) &emsp;
+      ([Comments](#user-content-write-brief-comments-of-high-quality) • 
+       [TODOs](#user-content-use-todo-and-fixme-tags) • 
+       [Readmes](#user-content-write-readme-files) • 
+       [Logging](#user-content-use-a-logging-library) • 
+       [File Headers](#user-content-write-file-headers-for-header-files) • 
+       [Docstrings](#user-content-use-docstrings-for-public-apis))
+  7. [**Languages**](#user-content-languages) &emsp;
+      ([Python](chapter/lang/python-guide.md) •
+       [C](chapter/lang/c-guide.md) •
+       [JavaScript](chapter/lang/javascript-guide.md))
+
+
+
+To follow this guide, you should already have heard about [Object Oriented Programming](https://www.educative.io/blog/object-oriented-programming) and know basic programming rules, such as writing loops and meaningful functions instead of copy pasting instructions. 
 
 
 
@@ -33,7 +56,7 @@ Since our brains are sieves, try to remember the underlying philosophy of this g
 
 “Consistency with this guide is important. Consistency within a project
 is more important. Consistency within one module or function is the most
-important” [PEP8].
+important” [[PEP8]](#user-content-references).
 
 
 
@@ -96,7 +119,7 @@ exchange as little information as possible.
 ### Aim for coherent abstraction levels.
 
 Each scope should reflect a single coherent level of abstraction that
-corresponds to its hierarchy level [ClCd]. In your UML, abstraction should
+corresponds to its hierarchy level [[ClCd]](#user-content-references). In your UML, abstraction should
 decrease from top to bottom. In your code, the deeper you are in a call
 tree, the more specific your instructions can be. Avoid state variables
 at high abstraction levels.
@@ -251,7 +274,6 @@ Int totalIncome(employee){
 
 Code should communicate behavior to other humans with lower complexity than the behavior it inherits. Abstracting with meaningful names is therefore most important for readability.
 
-> ⚠ **Avoid inappropriate terms:** Many organizations discourage the use of `master/slave` due to their negative association in different cultures. See [1](https://www.drupal.org/node/2275877) and [2](https://bugs.python.org/issue34605).
 
 
 
@@ -277,7 +299,7 @@ Procedures *may* return values, functions always return a value. Methods are sub
 
 ### Variables
 
- * variables with a large scope *should* have long names, variables with a small scope *may* have short names [CdCm].
+ * variables with a large scope *should* have long names, variables with a small scope *may* have short names [[CdCm]](#user-content-references).
  * collections (set, array, dict) should have a plural name. E.g. `cars`, `indices`
  * the prefix `n` or `num` should be used for names representing the total number of objects in a collection. E.g. `numCars`
  * boolean variables should start with a `is/has/can/does` prefix (e.g. `isEmpty`, `doesUseIO`).
@@ -310,7 +332,7 @@ for idx, score in scores:
 
 ### Use word pairs (opposites, antonyms).
 
-If you “`start`” something, you should “`stop`” it and not “`end`” it [CdCm]. 
+If you “`start`” something, you should “`stop`” it and not “`end`” it [[CdCm]](#user-content-references). 
 While most opposites can be created by using `un-` or `de-` prefixes (`lock/unlock`), some are more distinct and allow code alignment:
 
 Verb pairs with same length:
@@ -338,6 +360,11 @@ Noun and adjective pairs with same/similar length:
 
 
 </details>&nbsp;
+
+
+> ⚠ **Avoid inappropriate terms:** Many organizations discourage the use of `master/slave` due to their negative association in different cultures. See [1](https://www.drupal.org/node/2275877) and [2](https://bugs.python.org/issue34605).
+
+
 
 [Read more ...](chapter/4_naming.md)
 
@@ -386,7 +413,7 @@ English is the language of programming, so documentation should also be in Engli
 
 ### Write brief comments of high quality.
 
-Comment only if necessary and choose your words carefully. “Comments that contradict the code are worse than no comments” [PEP8]. Change comments when code changes. Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
+Comment only if necessary and choose your words carefully. “Comments that contradict the code are worse than no comments” [[PEP8]](#user-content-references). Change comments when code changes. Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
 
 Further Don'ts:
 
@@ -413,10 +440,38 @@ There are two different interest groups for your code, so please make sure that 
  * **Developers:** How to compile. Module structure, dependencies, contribution rules, where to contact developers.  
 
 
+### Use a Logging Library
+Provide meaningful logging messages at correct log levels:
+
+| Level     | Use-case                                      | Example        |
+|:----------|-----------------------------------------------|----------------|
+| Fatal:    | the system cannot continue operation          | segfault       |
+| Error:    | some function is (currently) not working      | no connection  |
+| Warn:     | unexpected event but retry/alternative works  | dropped packet |
+| Notice:   | notable events that do not happen often       | new device     |
+| Info:     | usual business events relevant to the user    | user connected |
+| Debug:    | technological info relevant for developers    | protocol stages|
+| Trace:    | step-by-step implementation details           | loop index     |
+
+
+* Each log entry should at least output log level and file/module name (or topic label). Timestamps and line numbers are optional.
+* Log with context and avoid messages like “Operation Failed” or “Write Complete”.
+* Separate parameters and messages. 
+
+
+<strong>Bad ❌</strong><br>
+```python
+print("User %s connected from %s", uid, ip)
+```
+<strong>Better ✔</strong>
+```python
+log.info("P2P: User connected. [id=%s, ip=%s]".format(uid, ip))
+```
+
 
 ### Write file headers for header files.
 
-Each code file with interfaces (e.g. `.h` files in C) should start with a block comment that briefly explains what this module/class/lib does.
+Each code file with interfaces (e.g. `.h` files in C) should start with a block comment that briefly explains what this module/class/lib does. However, do not provide author name or changelogs as this info belongs into the [Version Control System](https://www.geeksforgeeks.org/version-control-systems/).
 
 
 
