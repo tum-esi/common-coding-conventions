@@ -386,14 +386,15 @@ English is the language of programming, so documentation should also be in Engli
 
 ### Write brief comments of high quality.
 
-Choose your words carefully. “Comments that contradict the code are worse than no comments” [PEP8]. Change comments when code changes. Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
+Comment only if necessary and choose your words carefully. “Comments that contradict the code are worse than no comments” [PEP8]. Change comments when code changes. Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
 
 Further Don'ts:
 
-* Don't comment out code. Just remove.
+* Don't commit commented-out code. Just remove.
 * Don't create headings with S E P A R A T E D letters because you cannot search for them.
 * Don't assume insider knowledge but write simple comments for anybody on the planet.
 * Don't make jokes in comments. Tell them in person.
+* Don't comment closing braces. They just indicate that your blocks are too long.
 
 
 
@@ -490,3 +491,7 @@ Students from TUM and other universities can read these books for free. Simply c
 * [C++ coding style (JSF+MISRA)](http://micro-os-plus.github.io/develop/coding-style/): 
 * [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 * [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
+
+
+#### Videos
+* [Clean Code - Uncle Bob](https://www.youtube.com/watch?v=7EmboKQH8lM)
