@@ -474,7 +474,7 @@ print("User %s connected from %s", uid, ip)
 ```
 <strong>Better ✔</strong>
 ```python
-log.info("P2P: User connected. [id=%s, ip=%s]".format(uid, ip))
+log.info("P2P: User connected. [id=%s, ip=%s]", uid, ip)
 ```
 
 
