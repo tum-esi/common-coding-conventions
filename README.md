@@ -1,4 +1,4 @@
-<a href="https://www.ei.tum.de/esi" ><img width="100%" src="img/tum-ei-esi-header.svg"></a>
+<a href="https://www.ei.tum.de/esi" ><img width="100%" src="res/img/tum-ei-esi-header.svg"></a>
 
 
 &nbsp;
@@ -99,12 +99,12 @@ to connect scopes is the art of good architecture.
 
 Two common mistakes in architecture design are the creation of a monster class that has too many responsibilities and letting each class communicate with too many other classes:
 
-![Bad Architecture](img/architecture-bad.svg)
+![Bad Architecture.](res/img/architecture-bad.svg)
 
 
 Instead, limit the amount and direction of information exchange between classes and create larger architectures from the following building blocks:
 
-![Good Architecture](img/architecture-better.svg)
+![Better Architecture.](res/img/architecture-better.svg)
 
 
 
@@ -126,7 +126,7 @@ at high abstraction levels.
 
 
 <table>
-<tr><td><strong>Bad ❌</strong></td><td><strong>Better ✔</strong></td></tr>
+<tr><td><strong>Bad ❌</strong></td><td><strong>Better ✔</strong></td><td><strong>Better ✔</strong></td></tr>
 <tr>
 <td>
 
@@ -140,11 +140,20 @@ if fuelTank.isEmpty():
 
 ```python
 engine.start()
-engine.runTest():
+engine.runTest()
 warnings = engine.warnings()
 dashboard.show( warnings )
 ```
-</td></tr></table>
+</td><td>
+
+```python
+Sys.test():
+ Engine.test():
+  SparkPlug.test():
+   testIgnition()
+```
+</td></tr>
+</table>
 
 > ⚠ **Caution:** *Mixing abstraction levels creates confusion and introduces unnecessary dependencies.*
 
@@ -418,7 +427,7 @@ Comment only if necessary and choose your words carefully. “Comments that cont
 Further Don'ts:
 
 * Don't commit commented-out code. Just remove.
-* Don't create headings with S E P A R A T E D letters because you cannot search for them.
+* Don't create headings with `S E P A R A T E D` letters because you cannot search for them.
 * Don't assume insider knowledge but write simple comments for anybody on the planet.
 * Don't make jokes in comments. Tell them in person.
 * Don't comment closing braces. They just indicate that your blocks are too long.
