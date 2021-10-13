@@ -64,7 +64,7 @@ important” [[PEP8]](#user-content-references).
 
 Do not blindly follow this guide but think for yourself. The goal of
 software development is keeping the code complexity low. Period. None of
-the fancy patterns matters if the code becomes impossible to maintain.
+the rules and fancy patterns matters if the code becomes impossible to maintain.
 
 
 
@@ -147,9 +147,9 @@ dashboard.show( warnings )
 </td><td>
 
 ```python
-Sys.test():
- Engine.test():
-  SparkPlug.test():
+sys.test():
+ engine.test():
+  sparkPlug.test():
    testIgnition()
 ```
 </td></tr>
@@ -281,7 +281,7 @@ Int totalIncome(employee){
 &nbsp;
 ## [Naming](#user-content-naming)
 
-Code should communicate behavior to other humans with lower complexity than the behavior it inherits. Abstracting with meaningful names is therefore most important for readability.
+Code should communicate behavior to other humans with lower complexity than the behavior it inherits. Since code mostly consists of custom names, your ability to abstract concepts with meaningful names is most important for readability.
 
 
 
@@ -341,7 +341,7 @@ for idx, score in scores:
 
 ### Use word pairs (opposites, antonyms).
 
-If you “`start`” something, you should “`stop`” it and not “`end`” it [[CdCm]](#user-content-references). 
+If you `start` something, you should `stop` it and not `end` it [[CdCm]](#user-content-references). 
 While most opposites can be created by using `un-` or `de-` prefixes (`lock/unlock`), some are more distinct and allow code alignment:
 
 Verb pairs with same length:
@@ -420,16 +420,41 @@ English is the language of programming, so documentation should also be in Engli
 
 
 
-### Write brief comments of high quality.
+### Write few brief comments of high quality.
 
-Comment only if necessary and choose your words carefully. “Comments that contradict the code are worse than no comments” [[PEP8]](#user-content-references). Change comments when code changes. Comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
+Choose your words carefully and comment only what the code cannot say, that is *why* you did it, maybe *what* you did, but never *how*. 
+Change comments when code changes because “comments that contradict the code are worse than no comments” [[PEP8]](#user-content-references).  
+
+
+<table>
+<tr><td><strong>Bad ❌</strong></td><td><strong>Better ✔</strong></td></tr>
+<tr>
+<td>
+
+```python
+if t.h > NIGHT_H:  # Check if night
+  if ifr.sense():  # detect person 
+    turnLightOn()  # set Pin 13
+    lockLight(TIMEOUT) # TIMEOUT=5s
+```
+
+</td><td>
+
+```python
+if (isNightTime() and isPersonPresent()):
+  turnLightOn()
+  lockLight(TIMEOUT) # avoid flickering
+```
+
+</td></tr></table>
+
 
 Further Don'ts:
 
 * Don't commit commented-out code. Just remove.
 * Don't create headings with `S E P A R A T E D` letters because you cannot search for them.
 * Don't assume insider knowledge but write simple comments for anybody on the planet.
-* Don't make jokes in comments. Tell them in person.
+* Don't make jokes or use cute language.
 * Don't comment closing braces. They just indicate that your blocks are too long.
 
 
