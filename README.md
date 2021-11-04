@@ -25,16 +25,18 @@ The goal of these conventions is to be concise, universal, and remarkable. It ta
        [Sort Args](#user-content-sort-arguments-and-limit-them-to-0--4-per-call) • 
        [Compose](#user-content-do-not-change-the-same-variable-in-steps-but-compose-once-from-parts))
   4. [**Naming**](#user-content-naming) &emsp;
-      ([Subprograms](#user-content-subprograms-procedurefunction) • 
-       [Types](#user-content-types-classstructsubtypes) • 
-       [Variables](#user-content-variables) • 
+      ([Pick One](#user-content-pick-one-word-for-one-concept) • 
+       [Bools](#user-content-boolean-variablesfunctions-should-have-a-ishascan-prefix) • 
+       [Subprograms](#user-content-naming-subprograms-procedurefunction) • 
+       [Types](#user-content-naming-types-classstructsubtypes) • 
+       [Variables](#user-content-naming-variables) • 
        [Word Pairs](#user-content-use-word-pairs-opposites-antonyms))
   5. [**Code Layout**](#user-content-code-layout) 
   6. [**Documentation**](#user-content-documentation) &emsp;
       ([Comments](#user-content-write-brief-comments-of-high-quality) • 
        [TODOs](#user-content-use-todo-and-fixme-tags) • 
        [Readmes](#user-content-write-readme-files) • 
-       [Logging](#user-content-use-a-logging-library) • 
+       [Logging](#user-content-avoid-print-use-a-library-with-log-levels) • 
        [File Headers](#user-content-write-file-headers-for-header-files) • 
        [Docstrings](#user-content-use-docstrings-for-public-apis))
   7. [**Languages**](#user-content-languages) &emsp;
@@ -185,7 +187,7 @@ There are two code smells that should remind you of this rule:
 
 * **Copy & Paste:** Every time you take your mouse and mark lines with the intention to copy them, you are going to violate this rule. Instead of slightly adjusting copied lines, think about the common pattern between those lines and create a new function.
 
-* **Repeated `if-else` and `switch-case` statements:** If you are testing the same conditions at different locations (e.g. state variables), you can abstract these differences with Polymorphism and the Strategy Pattern.
+* **Repeated `if-else` and `switch-case` statements:** If you are testing the same conditions at different locations (e.g. state variables), you can abstract these differences with Polymorphism and the [Strategy Pattern](https://refactoring.guru/design-patterns/strategy).
 
 
 
@@ -219,7 +221,7 @@ if (speed > limit &&
 **Better ✔**
 ```c
 MeterPerSecond limit = SPEED_LIMIT_NIGHT;
-drive(Point origin, Point dest);
+drive(Point origin, Point destination);
 
 isNight    = (T_NIGHT_MIN < t.h && t.h < T_NIGHT_MAX);
 isSpeeding = (limit < speed);
@@ -232,7 +234,26 @@ if (isSpeeding && isNight){ ... }
 
 If the argument list of a subprogram grows too long, try to combine related arguments in a
 new data structure. For example, instead of passing `x`, `y`, `z`
-coordinates individually, use a single vector. 
+coordinates individually, use a single vector.
+
+
+<table>
+<tr><td><strong>Bad ❌</strong></td><td><strong>Better ✔</strong></td></tr>
+<tr>
+<td>
+  
+```c
+makeCircle(double r, double x, double y)
+```
+
+</td><td>
+
+```c
+makeCircle(Point center, double radius)
+```
+
+</td></tr></table>
+
 
 
 
@@ -285,33 +306,69 @@ Code should communicate behavior to other humans with lower complexity than the 
 
 
 
+### Pick one word for one concept.
 
-### Subprograms (=Procedure/Function)
+Each concept should be described by a single word. Do not use `send()`, `write()`, and `transmit()` as synonyms for the same process, such as sending a message over a bus. Same holds true for `handleRequest()`, `processQuery()`, or `manageIncomingPacket()`.
+
+Each word should only describe a single concept. Do not use `activate()` for setting a boolean variable and sending an activation packet to another system component. The first procedure is safe and instant, the second could fail, block execution, or run asynchronously. Better call it `sendActivationMsg()`.
+
+
+
+
+
+
+
+### Boolean Variables/Functions should have a `is/has/can` prefix.
+Clean code reads like prose and these prefixes achieve clear and concise naming. 
+There is no difference between the naming of variables, e.g. `hasElements`, and functions, e.g. `hasElements()`, except that functions can also answer true/false questions regarding arguments, such as `isFile(path)` or `user.hasAccessTo(file)`.
+
+<!-- Variable Example: `hasElements`, `isUsingIO`<br>
+Function examples: `hasElements()`, `isFile(path)`, `user.hasAccessTo(file)` -->
+
+* consider the slightly uncommon prefixes `can` to express abilities/possibilities, e.g. `canWalk`.
+* boolean names regarding [Collections](https://en.wikipedia.org/wiki/Collection_(abstract_data_type)) should use `Each/Any` before the prefix, e.g. `isEachLightOn` / `isAnyLightOn`
+* prefer positive forms. Use `isActive` not `isInactive` to avoid confusing negations  (`!isInactive`). Same for `hasElements` (not `isEmpty`) and `isEnabled` (not `isDisabled`).
+* Avoid further uncommon prefixes, such as `does`, `are`, `was`, `will`, `should`.
+
+
+| Rule           | Bad ❌                                            | Better ✔    | 
+|:---------------|:--------------------------------------------------|:------------|
+| Consider `can` | `isAllowedToWalk`, `hasWalkAbility`, `isWalkable` | `canWalk`        |
+| Avoid `not`    | `isNotEmpty`, `!isEmpty`                          | `hasElements`    |
+| Avoid `are`:   | `areAllLightsOn`, `isAllLightsOn` , `allLightsOn` | `isEachLightOn` |
+| Avoid `was/had`| `wasSend`, `hasBeenSent`, `hadArrived`            | `isSent`         |
+| Avoid `does`   | `doesUseIO`, `mightUseIO`      | `isUsingIO`, `canUseIO` |
+
+
+Fun fact: The old [jQuery 1.7](https://code.jquery.com/jquery-1.7.2.js)  had a boolean called `doesNotAddBorder`. Now they use `isBorderBox`.
+
+
+
+### Naming Subprograms (=Procedure/Function)
 
 Procedures *may* return values, functions always return a value. Methods are subprograms of a class.
  * procedure names should start with a verb. e.g. `syncViews()`, `list.addItem(x)`.
- * function names should describe the result and, if suitable, its type. e.g. `time_ms(), sin(x)`
+ * function names should describe the result and, if suitable, its type. e.g. `time_ms(), sin(x), isFile(path)`
  * class methods should not repeat or include the name of the class. Define `Line.length()`, not `Line.getLineLength()`
 
 > ⚠ **Caution:** *Single noun subprograms should be pure functions! Never let e.g. `x.length()` change a state.*
 
 
 
-### Types (=Class/Struct/Subtypes)
+### Naming Types (=Class/Struct/Subtypes)
 
  * type names should be capitalized nouns. E.g. `Integer`, `Date`, `Line2D`
- * enums/structs are types and named as types without a special prefix/suffix.<br>
+ * enums/structs are types and should be named as types without a special prefix/suffix.<br>
    E.g. `enum Color = {RED, GREEN, BLUE}`
  * interface names can start with a capital `I` and can also be adjectives. E.g. `IObservable`
 
 
 
-### Variables
+### Naming Variables
 
  * variables with a large scope *should* have long names, variables with a small scope *may* have short names [[CdCm]](#user-content-references).
  * collections (set, array, dict) should have a plural name. E.g. `cars`, `indices`
  * the prefix `n` or `num` should be used for names representing the total number of objects in a collection. E.g. `numCars`
- * boolean variables should start with a `is/has/can/does` prefix (e.g. `isEmpty`, `doesUseIO`).
  * write constant names in capitals. E.g `CFG_TEMPERATURE_MAX = 80.0`
  * prefix global variables with `g_`
 
@@ -371,7 +428,11 @@ Noun and adjective pairs with same/similar length:
 </details>&nbsp;
 
 
-> ⚠ **Avoid inappropriate terms:** Many organizations discourage the use of `master/slave` due to their negative association in different cultures. See [1](https://www.drupal.org/node/2275877) and [2](https://bugs.python.org/issue34605).
+
+
+
+> ⚠ **Avoid inappropriate terms:** Many organizations discourage the use of `master/slave` due to their negative association in different cultures. See [1](https://www.drupal.org/node/2275877) and [2](https://bugs.python.org/issue34605).<br>
+> ⚠ **Avoid useless noise-terms:** E.g. `data`, `info`, `process`. What would be the difference between `Product`, `ProductData`, and `ProductInfo`? 
 
 
 
@@ -474,8 +535,8 @@ There are two different interest groups for your code, so please make sure that 
  * **Developers:** How to compile. Module structure, dependencies, contribution rules, where to contact developers.  
 
 
-### Use a Logging Library
-Provide meaningful logging messages at correct log levels:
+### Avoid `print`. Use a library with log levels.
+
 
 | Level     | Use-case                                      | Example        |
 |:----------|-----------------------------------------------|----------------|
@@ -488,9 +549,10 @@ Provide meaningful logging messages at correct log levels:
 | Trace:    | step-by-step implementation details           | loop index     |
 
 
+
 * Each log entry should at least output log level and file/module name (or topic label). Timestamps and line numbers are optional.
 * Log with context and avoid messages like “Operation Failed” or “Write Complete”.
-* Separate parameters and messages. 
+* Separate message (`"User connected"`) from parameters (`"ip=%s", ip`) 
 
 
 <strong>Bad ❌</strong><br>
@@ -501,6 +563,9 @@ print("User %s connected from %s", uid, ip)
 ```python
 log.info("P2P: User connected. [id=%s, ip=%s]", uid, ip)
 ```
+
+
+
 
 
 ### Write file headers for header files.
