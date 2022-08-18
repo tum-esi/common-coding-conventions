@@ -326,7 +326,7 @@ There is no difference between the naming of variables, e.g. `hasElements`, and 
 Function examples: `hasElements()`, `isFile(path)`, `user.hasAccessTo(file)` -->
 
 * consider the slightly uncommon prefixes `can` to express abilities/possibilities, e.g. `canWalk`.
-* boolean names regarding [Collections](https://en.wikipedia.org/wiki/Collection_(abstract_data_type)) should use `Each/Any` before the prefix, e.g. `isEachLightOn` / `isAnyLightOn`
+* [boolean](https://www.scaler.com/topics/boolean-in-c/) names regarding [Collections](https://en.wikipedia.org/wiki/Collection_(abstract_data_type)) should use `Each/Any` before the prefix, e.g. `isEachLightOn` / `isAnyLightOn`
 * prefer positive forms. Use `isActive` not `isInactive` to avoid confusing negations  (`!isInactive`). Same for `hasElements` (not `isEmpty`) and `isEnabled` (not `isDisabled`).
 * Avoid further uncommon prefixes, such as `does`, `are`, `was`, `will`, `should`.
 
