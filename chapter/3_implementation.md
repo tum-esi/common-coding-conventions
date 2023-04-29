@@ -29,7 +29,7 @@ necessary but be open for extensions.
 
 ### Structure Files into 1. Imports, 2. Constants, 3. Publics, 4. Privates
 
-Structure each code file into parts: 1. imports/includes, 2. lobal constants, 3.
+Structure each code file into parts: 1. imports/includes, 2. global constants, 3.
 public classes/functions, 4. private classes/functions, and optional 5. direct
 instructions in the `main` file. Keep these parts in order and
 separated, e.g. do not include files or define globals within a function
