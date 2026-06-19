@@ -215,7 +215,7 @@ from_to(int x,  int y,
         int x2, int y2);     // vague argument names 
 
 if (speed > limit && 
-   t.h > 22 && t.h < 6){ ... }  // 22 and 6 are magic numbers
+    (t.h > 22 || t.h < 6)){ ... }  // 22 and 6 are magic numbers
 ```
 
 **Better ✔**
@@ -223,7 +223,7 @@ if (speed > limit &&
 MeterPerSecond limit = SPEED_LIMIT_NIGHT;
 drive(Point origin, Point destination);
 
-isNight    = (T_NIGHT_MIN < t.h && t.h < T_NIGHT_MAX);
+isNight    = (T_NIGHT_MIN < t.h || t.h < T_NIGHT_MAX);
 isSpeeding = (limit < speed);
 if (isSpeeding && isNight){ ... }
 ```
